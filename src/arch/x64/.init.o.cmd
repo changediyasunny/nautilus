@@ -21,6 +21,7 @@ deps_src/arch/x64/init.o := \
     $(wildcard include/config/thread/exit/keycode.h) \
     $(wildcard include/config/use/ticketlocks.h) \
     $(wildcard include/config/virtual/console/serial/mirror.h) \
+    $(wildcard include/config/virtual/console/serial/mirror/all.h) \
     $(wildcard include/config/fpu/save.h) \
     $(wildcard include/config/kick/schedule.h) \
     $(wildcard include/config/halt/while/idle.h) \

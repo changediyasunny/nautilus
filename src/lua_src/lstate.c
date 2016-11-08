@@ -134,7 +134,7 @@ static void stack_init (lua_State *L1, lua_State *L) {
   int i; CallInfo *ci;
   /* initialize stack array */
   L1->stack = luaM_newvector(L, BASIC_STACK_SIZE, TValue);
-  printk("\n after Stack newvector: = %p", L1->stack);
+  printk("\nstack-init | stack newvector called: = %p", L1->stack);
   L1->stacksize = BASIC_STACK_SIZE;
   for (i = 0; i < BASIC_STACK_SIZE; i++)
     setnilvalue(L1->stack + i);  /* erase new stack */
@@ -268,10 +268,10 @@ LUA_API lua_State *lua_newstate (lua_Alloc f, void *ud) {
   int i;
   lua_State *L;
   global_State *g;
-  printk("\n now CAST:");
+  printk("\nlua_newstate.... ");
   LG *l = cast(LG *, (*f)(ud, NULL, LUA_TTHREAD, sizeof(LG)));
   if (l == NULL) return NULL;
-  printk("\n CAST Done...");
+  printk("\nlua_newstate | LG *l casted...");
   L = &l->l.l;
   g = &l->g;
   L->next = NULL;

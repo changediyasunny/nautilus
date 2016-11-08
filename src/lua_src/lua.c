@@ -436,6 +436,7 @@ static int handle_luainit (lua_State *L) {
 
 
 static int pmain (lua_State *L) {
+  printk("\n pmain  called.");
   int argc = (int)lua_tointeger(L, 1);
   char **argv = (char **)lua_touserdata(L, 2);
   int script;

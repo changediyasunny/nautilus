@@ -265,17 +265,40 @@ drand48(void)
     return ret.d - 1.0;
 }
 
+int fprintf (FILE * f, const char * s, ...)
+{
+    #if 0
+        UNDEF_FUN_ERR();
+        return -1;
+    #else
+        va_list arg;
+        va_start(arg,s);
+        vprintk(s, arg);
+        va_end(arg);
+        return 0;
+    #endif
+}
+
+/* ********************
+
+
+LUA DEF. STARTS HERE...
+
+
+********************** */
 
 char *
 strerror (int errnum)
 {
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | stderror ");
     return NULL;
 }
 FILE *tmpfile(void)
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | tmpfile ");
     return NULL;
 
 }
@@ -283,18 +306,21 @@ int
 ferror (FILE * f)
 {
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | ferror ");
     return -1;
 }
 FILE *freopen(const char *fname, const char *mode,FILE *stream)
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | freopen ");
     return NULL;
 }
 int 
 fclose (FILE * f)
 {
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | fclose ");
     return -1;
 }
 
@@ -303,22 +329,22 @@ FILE *
 fopen (const char * path, FILE * f)
 {
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | fopen ");
     return NULL;
 }
 
 
-FILE * 
-fopen64 (const char * path, FILE * f)
+FILE *fopen64 (const char * path, FILE * f)
 {
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | fopen64 ");
     return NULL;
 }
 
-//For LUA
-FILE * 
-fdopen (int fd, const char * mode)
+FILE *fdopen (int fd, const char * mode)
 {
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | fdopen ");
     return NULL;
 }
 
@@ -326,28 +352,31 @@ char *getenv(const char *name)
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | getenv ");
     return NULL;
 }
-//For LUA
+
 clock_t clock()
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | clock ");
     return -1;
 }
-//For LUA
+
 char *tmpnam(char *s)
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | tmpnam ");
     return NULL;
 }
 
-//For LUA
 int remove(const char *path)
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | remove ");
     return -1;
 }
 //For LUA
@@ -355,6 +384,7 @@ int rename(const char *old, const char *new)
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | rename ");
     return -1;
 }
 //For LUA
@@ -362,41 +392,28 @@ int system(const char *command)
 {
 
     UNDEF_FUN_ERR();
+    printk("\nlibccompat.c | system ");
     return -1;
 }
 //For LUA
 
 int fflush (FILE * f)
 {
+    printk("\nlibccompat.c | fflush ");
     return 0;
 }
 
-void (*signal(int sig, void (*func)(int)))(int ){
-    printk("\nSIGNAL Function:");
-}
-
-//For LUA
-
-int 
-fprintf (FILE * f, const char * s, ...)
+void (*signal(int sig, void (*func)(int)))(int )
 {
-#if 0
-    UNDEF_FUN_ERR();
-    return -1;
-#else
-    va_list arg;
-    va_start(arg,s);
-    vprintk(s, arg);
-    va_end(arg);
-    return 0;
-#endif
+    printk("\nlibccompat.c | signal ");
 }
+
 
 //For LUA
 int setvbuf(FILE *restrict stream, char *restrict buf, int type,
        size_t size)
 {
-
+    printk("\nlibccompat.c | setvbuf ");
     UNDEF_FUN_ERR();
     return -1;
 }
@@ -406,7 +423,7 @@ int setvbuf(FILE *restrict stream, char *restrict buf, int type,
 
 int fscanf(FILE *restrict stream, const char *restrict format, ... )
 {
-
+    printk("\nlibccompat.c | fscanf ");
     UNDEF_FUN_ERR();
     return -1;
 
@@ -414,145 +431,167 @@ int fscanf(FILE *restrict stream, const char *restrict format, ... )
 //For LUA
 void clearerr(FILE *stream)
 {
-
+    printk("\nlibccompat.c | clearerr ");
     UNDEF_FUN_ERR();
     return NULL;
 }
 
 int printf (const char * s, ...)
 {
-#if 0
-    UNDEF_FUN_ERR();
-    return -1;
-#else
-    va_list arg;
-    va_start(arg,s);
-    vprintk(s, arg);
-    va_end(arg);
-    return 0;
-#endif
+    printk("\nlibccompat.c | printf ");
+    #if 0
+        UNDEF_FUN_ERR();
+        return -1;
+    #else
+        va_list arg;
+        va_start(arg,s);
+        vprintk(s, arg);
+        va_end(arg);
+        return 0;
+    #endif
 }
 
 int fputc (int c, FILE * f) 
 {
+    printk("\nlibccompat.c | fputc ");
     printk("%c");
     return c;
 }
 int fputs (const char *s, FILE *stream)
 {
+    printk("\nlibccompat.c | fputs ");
     printk("%s\n", stream);
     return 0;
 }
 size_t fwrite (const void *ptr, size_t size, size_t nmemb, FILE *stream)
 {
+    printk("\nlibccompat.c | fwrite ");
     UNDEF_FUN_ERR();
     return 1;
 }
 size_t fread (void *ptr, size_t size, size_t count, FILE *stream)
 {
+    printk("\nlibccompat.c | fread ");
     UNDEF_FUN_ERR();
     return 1;
 }
 
 int getwc (FILE *stream)
 {
+    printk("\nlibccompat.c | getwc ");
     UNDEF_FUN_ERR();
     return 1;
 }
-size_t __ctype_get_mb_cur_max (void)
+size_t __ctype_get_mb_cur_max(void)
 {
+    printk("\nlibccompat.c | __ctype_get_mb_cur_max() ");
     UNDEF_FUN_ERR();
     return 0;
 }
 //For LUA
 int fseek(FILE *stream, long offset, int whence)
 {
-
+    printk("\nlibccompat.c | Fseek ");
     UNDEF_FUN_ERR();
     return 1;
 }
 int fseeko64 (FILE *fp, uint64_t offset, int whence)
 {
+    printk("\nlibccompat.c | Fseeko64 ");
     UNDEF_FUN_ERR();
     return 1;
 }
 int ungetc (int character, FILE * stream)
 {
+    printk("\nlibccompat.c | ungetc ");
     UNDEF_FUN_ERR();
     return 1;
 }
 uint64_t lseek64 (int fd, uint64_t offset, int whence)
 {
+    printk("\nlibccompat.c | lseek64 ");
     UNDEF_FUN_ERR();
     return 1;
 }
 
 uint64_t ftello64 (FILE *stream)
 {
+    printk("\nlibccompat.c | ftello64 ");
     UNDEF_FUN_ERR();
     return 1;
 }
 //For LUA
 long ftell(FILE *x)
 {
+    printk("\nlibccompat.c | ftell() ");
     UNDEF_FUN_ERR();
     return -1;
 }
 int poll (struct pollfd *fds, nfds_t nfds, int timeout)
 {
+    printk("\nlibccompat.c |poll() ");
     UNDEF_FUN_ERR();
     return 1;
 }
 
 int ioctl (int d, unsigned long request, ...)
 {
+    printk("\nlibccompat.c | ioctl() ");
     UNDEF_FUN_ERR();
     return 1;
 }
 
 int syscall (int number, ...)
 {
+    printk("\nlibccompat.c | syscall ");
     UNDEF_FUN_ERR();
     return 1;
 }
 
 char *setlocale (int category, const char *locale)
 {
+    printk("\nlibccompat.c | setlocate() ");
     UNDEF_FUN_ERR();
     return NULL;
 }
 
-locale_t __duplocale (locale_t locobj)
+locale_t __duplocale(locale_t locobj)
 {
+    printk("\nlibccompat.c | __duplocale() ");
     UNDEF_FUN_ERR();
     return NULL;
 }
 
 char *bindtextdomain (const char * domainname, const char * dirname)
 {
+    printk("\nlibccompat.c | bindtextdomain ");
     UNDEF_FUN_ERR();
     return NULL;
 }
 
 char *textdomain (const char * domainname)
 {
+    printk("\nlibccompat.c | textdomain ");
     UNDEF_FUN_ERR();
     return NULL;
 }
 
 locale_t __newlocale (int category_mask, const char *locale, locale_t base)
 {
+    printk("\nlibccompat.c | __newlocale() ");
     return (locale_t)((ulong_t)base | (ulong_t)category_mask);
 }
 
 char *__nl_langinfo_l (nl_item item, locale_t locale)
 {
+    printk("\nlibccompat.c | __nl_langinfo_l ");
     UNDEF_FUN_ERR();
     return NULL;
 }
 
 char *gettext (const char * msgid)
 {
+    printk("\nlibccompat.c | gettext ");
     char * ret = (char*)msgid;
     UNDEF_FUN_ERR();
     return ret;
@@ -560,7 +599,7 @@ char *gettext (const char * msgid)
 
 int getc(FILE* arg)
 {
-
+    printk("\nlibccompat.c | getc ");
     UNDEF_FUN_ERR();
     return -1;
 
@@ -568,144 +607,185 @@ int getc(FILE* arg)
 //LUA SPECIFIC....................
 size_t strftime(char *str, size_t maxsize, const char *format, const struct tm *timeptr)
 {
+    printk("\nlibccompat.c | strftime ");
     return 0;
 }
 int feof(FILE * x)
 {
+    printk("\nlibccompat.c | feof ");
     UNDEF_FUN_ERR();
     return 0;
 }
 
 char *fgets(char *str, int n, FILE *stream)
 {
+    printk("\nlibccompat.c | fgets ");
     UNDEF_FUN_ERR();
     return NULL;
 }
 void *memchr(const void *str, int c, size_t n)
 {
+    printk("\nlibccompat.c | memchar ");
     return NULL;
 }
 void longjmp(int *x, int __y)
 {
+    printk("\nlibccompat.c | longjmp ");
     UNDEF_FUN_ERR();
 }
 
 int setjmp(int *x)
 {
+    printk("\nlibccompat.c | setjmp ");
     return 0;
 }
-double fabs(double __x){
+double fabs(double __x)
+{
+    printk("\nlibccompat.c | fabs ");
     return 0;
 }
-double atan(double __x){
+double atan(double __x)
+{
+    printk("\nlibccompat.c | atan ");
     return 45.000;
 }
-double atan2(double y, double x){
+double atan2(double y, double x)
+{
+    printk("\nlibccompat.c | atan2 ");
     return 135.00;
 }
-double fmod(double y, double x){
-    // this is replacement to actual fmod() (/nautilus/libccompat)
-    // defining own fmod similar to the one defined in (/gcc/libc)
+double fmod(double y, double x)
+{
+    printk("\nlibccompat.c | fmod ");
     return 2.0;
 }
-double modf(double y, double *x){
-  *x = 0;
-  return 0.000;
+double modf(double y, double *x)
+{
+    printk("\nlibccompat.c | modf ");
+    *x = 0;
+    return 0.000;
 }
-double frexp(double x, int *e){
-  *e = 0;
-  return 0.5;
+double frexp(double x, int *e)
+{
+    printk("\nlibccompat.c | frexp ");
+    *e = 0;
+    return 0.5;
 }
-double ldexp(double x, int exp){
-  return x;
+double ldexp(double x, int exp)
+{
+    printk("\nlibccompat.c | ldexp ");
+    return x;
 }
-double strtod(const char *str, char **endptr){
+double strtod(const char *str, char **endptr)
+{
+    printk("\nlibccompat.c | strtod ");
     return 0.0;
 }
 /*----------*/
 double abs(double x)
 {
-//should return absolute value of x
-return x;
+    printk("\nlibccompat.c | abs ");
+    //should return absolute value of x
+    return x;
 }
 double sin(double x)
 {
-return x;
+    printk("\nlibccompat.c | sin ");
+    return x;
 }
 double sinh(double x)
 {
+    printk("\nlibccompat.c | sinh ");
 return x;
 }
 double cos(double x)
 {
-return x;
+    printk("\nlibccompat.c | cos ");
+    return x;
 }
 double cosh(double x)
 {
-return x;
+    printk("\nlibccompat.c | cosh ");
+    return x;
 }
 time_t mktime(struct tm *timeptr)
 {
+    printk("\nlibccompat.c | mktime ");
     return 0;
 }
 struct tm *localtime(const time_t *timer)
 {
+    printk("\nlibccompat.c | localtime");
     return NULL;
 }
 struct tm *gmtime(const time_t *timer)
 {
+    printk("\nlibccompat.c | gmtime ");
     return NULL;
 }
 int strcoll(const char *str1, const char *str2)
 {
+    printk("\nlibccompat.c | strcoll ");
     return 0;
 }
 double tan(double x)
 {
+    printk("\nlibccompat.c | tan ");
 return x;
 }
 double tanh(double x)
 {
+    printk("\nlibccompat.c | tanh ");
 return x;
 }
 double asin(double x)
 {
+    printk("\nlibccompat.c | asin ");
 return x;
 }
 double acos(double x)
 {
+    printk("\nlibccompat.c | acos ");
 return x;
 }
 double ceil(double x)
 {
+    printk("\nlibccompat.c | ceil ");
 return x;
 }
 double floor(double x)
 {
+    printk("\nlibccompat.c | floor ");
 return x;
 }
 double difftime(time_t time1, time_t time2)
 {
+    printk("\nlibccompat.c | difftime ");
     return 0;
 }
 double sqrt(double x)
 {
+    printk("\nlibccompat.c | sqrt ");
 return x;
 }
 double pow(double x, double y)
 {
+    printk("\nlibccompat.c | pow ");
 return x;
 }
 double log(double x)
 {
+    printk("\nlibccompat.c | log ");
 return x;
 }
 double log10(double x)
 {
+    printk("\nlibccompat.c | log10 ");
 return x;
 }
 double exp(double x)
 {
+    printk("\nlibccompat.c | exp ");
 return x;
 }
 

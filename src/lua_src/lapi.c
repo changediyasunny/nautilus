@@ -554,8 +554,11 @@ LUA_API const char *lua_pushfstring (lua_State *L, const char *fmt, ...) {
 
 LUA_API void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n) {
   lua_lock(L);
+  printk("\n lua_pushcclosure | lua_lock() done");
   if (n == 0) {
+    printk("\n lua_pushcclosure | if loop  done");
     setfvalue(L->top, fn);
+    printk("\n lua_pushcclosure | setfvalue done");
   }
   else {
     Closure *cl;
@@ -570,7 +573,9 @@ LUA_API void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n) {
     setclCvalue(L, L->top, cl);
   }
   api_incr_top(L);
+  printk("\n lua_pushcclosure | api_incr_top() done");
   lua_unlock(L);
+  printk("\n lua_pushcclosure | lua_unlock() done");
 }
 
 
