@@ -113,6 +113,7 @@ deps_src/lua_src/ldo.o := \
   include/lua/ltable.h \
   include/lua/lundump.h \
   include/lua/lvm.h \
+  include/nautilus/setjmp.h \
 
 src/lua_src/ldo.o: $(deps_src/lua_src/ldo.o)
 

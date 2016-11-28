@@ -31,7 +31,8 @@ obj-y += \
 	nemo.o \
 	pmc.o \
 	mm/ \
-        shell.o
+	setjmp.o\
+	shell.o
 
 obj-$(NAUT_CONFIG_PROFILE) += instrument.o
 obj-$(NAUT_CONFIG_XEON_PHI) += sfi.o

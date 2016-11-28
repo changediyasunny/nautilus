@@ -312,13 +312,16 @@ init (unsigned long mbd,
 
     /* interrupts on */
     sti();
-    printk("Going to create LUA NewState\n");
-    //lua_State *L;
-    //L = luaL_newstate();
+    /*
+    printk("Going to  LUA Main\n");
+    
     int ret_code;
-    ret_code = lua_main(1, NULL );
-    //printk("\n LUA return code is: %d", &ret_code);
-    printk("\n Lua NewState Success !\n");
+    char* temp;
+    temp = "./lua";
+    printk("%s",temp);
+    ret_code = lua_main(1,&temp);
+    printk("\n Lua Main  Success !\n");
+    */
     //while(1); 
     nk_vc_init();
 
@@ -328,10 +331,7 @@ init (unsigned long mbd,
 
     runtime_init();
     printk("Nautilus boot thread yielding (indefinitely)\n");
-    //LUA Call
-    //lua_State *L;
-    //L = luaL_newstate();
-    //printk("Lua NewState Success !\n");
+   
 
     /* we don't come back from this */
     idle(NULL, NULL);

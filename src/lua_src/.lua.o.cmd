@@ -92,6 +92,10 @@ deps_src/lua_src/lua.o := \
   include/lua/lauxlib.h \
   include/lua/libdump.h \
   include/lua/lualib.h \
+  include/nautilus/shell.h \
+  include/nautilus/thread.h \
+  include/nautilus/percpu.h \
+  include/nautilus/msr.h \
 
 src/lua_src/lua.o: $(deps_src/lua_src/lua.o)
 

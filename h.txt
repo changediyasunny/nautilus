@@ -1,0 +1,232 @@
+    1  cd ~/.vim/bundle
+    2  mkdir -p ~/.vim/autoload ~/.vim/bundle;
+    3  curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+    4  cd ~/.vim/bundle
+    5  :NERDTreeToggle
+    6  NERDTreeToggle
+    7  :NERDTreeToggle
+    8  vi ~/.vimrc 
+    9  :NERDTreeToggle
+   10  cd ~/.vim/bundle
+   11  ls
+   12  cd D
+   13  cd Downloads/
+   14  ls
+   15  unzip nautilus-20161030T191514Z.zip -d naut_sunny
+   16  cd naut_sunny/
+   17  ls
+   18  make 
+   19  cd nautilus/
+   20  make
+   21  make oldconfig
+   22  make
+   23  make menuconfig
+   24  make
+   25  cd src/lua_src/
+   26  grep -R paninc
+   27  grep -R panic
+   28  pwd
+   29  pwd
+   30  cd /home/goutham/Downloads/naut_sunny/nautilus/src/lua_src
+   31  ls
+   32  cd ..
+   33  cd nautilus/
+   34  vi libccompat.c 
+   35  cd ../../
+   36  ls
+   37  cd src/
+   38  grep -R libcompact
+   39  grep -R libccompat
+   40  cd ../..
+   41  cd nautilus/
+   42  vls
+   43  cd ../
+   44  pwd
+   45  cd nautilus/include/
+   46  ls
+   47  cd nautilus/
+   48  vi libccompat.h 
+   49  pwd
+   50  cd CS-595
+   51  cd src/nautilus/
+   52  vi libccompat.c 
+   53  cd CS-595/
+   54  git status
+   55  git pull
+   56  cd ..
+   57  git pull
+   58  cd cs595/
+   59  git pull
+   60  git merge
+   61  git pull merge
+   62  vi .config
+   63  cd .git/
+   64  vi config 
+   65  cd ..
+   66  rm -rf cs595/
+   67  ls
+   68  rm -rf CS-595/
+   69  ls
+   70  git https://github.com/goutkannan/nautilus-1.git
+   71  git clone https://github.com/goutkannan/nautilus-1.git
+   72  ls
+   73  mv nautilus-1/ cs595
+   74  ls
+   75  cd cs595/
+   76  ls
+   77  make
+   78  make menuconfig
+   79  make isoimage 
+   80  sudo apt-get install ubuntu-restricted-extr
+   81  sudo apt-get install ubuntu-restricted-extras
+   82  cd cs595/
+   83  git reset --hard HEAD
+   84  git clean -f
+   85  git pull
+   86  cd src/lua_src/
+   87  cd ../../
+   88  cd src/arch/x64/
+   89  vi init.c 
+   90  cd -
+   91  make menuconfig
+   92  make isoimagae
+   93  make isoimage
+   94  head
+   95* 
+   96  head -5
+   97  vi src/lua_src/lua.c :vert
+   98  vi -o src/lua_src/lua.c :vert
+   99  vi -o src/lua_src/lua.c
+  100  vi -o src/lua_src/lua.c :vert
+  101  ls
+  102  cd src/lua_src/
+  103  ls
+  104* vi lu
+  105  ls
+  106  vi lua.c :vsplit
+  107  vsplit
+  108* 
+  109  vi lua.c lua_open.c :vsplit
+  110  vi lua.c lua_open.c 
+  111  vi -O lua.c lua_open.c 
+  112  qemu-system-x86_64 -cdrom nautilus.iso -m 2048 -serial stdio
+  113  cd .././/
+  114  cd ..
+  115  qemu-system-x86_64 -cdrom nautilus.iso -m 2048 -serial stdio
+  116  cd .././/
+  117  ls
+  118  cd Downloads/
+  119  ls
+  120  vi 0001-add-setjmp-longjmp-support.patch 
+  121  cp ../cs595/
+  122  cp 0001-add-setjmp-longjmp-support.patch  ../cs595/
+  123  cd ..
+  124  cd cs595/
+  125  path < 0001-add-setjmp-longjmp-support.patch 
+  126  patch < 0001-add-setjmp-longjmp-support.patch 
+  127  vi 0001-add-setjmp-longjmp-support.patch 
+  128  vi Makefile
+  129  vi 0001-add-setjmp-longjmp-support.patch 
+  130  vi Makefile
+  131  vi 0001-add-setjmp-longjmp-support.patch 
+  132  cd  src/nautilus/
+  133  vi Makefile 
+  134  cd -
+  135  make clean
+  136  patch < 0001-add-setjmp-longjmp-support.patch 
+  137  Vi Makefile.rej 
+  138  vi Makefile.rej 
+  139  vi Makefile.rej 0001-add-setjmp-longjmp-support.patch :vsplit
+  140  vi -O  Makefile.rej 0001-add-setjmp-longjmp-support.patch :vsplit
+  141  vi src/asm/Makefile 
+  142  vi -O Makefile.rej  src/asm/Makefile 
+  143  vi Makefile.rej 
+  144  locate setjmp.c
+  145* i 0001-add-setjmp-longjmp-support.p
+  146  cd include/nautilus/
+  147  ls
+  148  cd ..
+  149  patch < 0001-add-setjmp-longjmp-support.patch 
+  150  locate setjmp.c
+  151  locate -R  setjmp.c
+  152  fing  setjmp.c
+  153  find  setjmp.c
+  154  vi 0001-add-setjmp-longjmp-support.patch 
+  155  cd src/asm/
+  156  ls
+  157  find  setjmp.ccd ..
+  158  cd ../.././/.
+  159  patch -R < 0001-add-setjmp-longjmp-support.patch 
+  160  locate setjmp.h
+  161  locate setjmp.c
+  162  cd src/
+  163  cd ../include/
+  164  ls
+  165  cd nautilus/
+  166  ls
+  167  cd ../../../
+  168  cd cs595/
+  169  vi 0001-add-setjmp-longjmp-support.patch 
+  170  cd src/
+  171  patch < ../0001-add-setjmp-longjmp-support.patch 
+  172  locate setjmp.h
+  173  locate setjmp.c
+  174  patch -p1 < ../0001-add-setjmp-longjmp-support.patch 
+  175  patch -dry-run < ../0001-add-setjmp-longjmp-support.patch 
+  176  patch --dry-run < ../0001-add-setjmp-longjmp-support.patch 
+  177  patch -R -V < ../0001-add-setjmp-longjmp-support.patch 
+  178  patch -R < ../0001-add-setjmp-longjmp-support.patch 
+  179  patch < /0001-add-setjmp-longjmp-support.patch 
+  180  cd ..
+  181  patch < /0001-add-setjmp-longjmp-support.patch 
+  182  patch < 0001-add-setjmp-longjmp-support.patch 
+  183  cd include/nautilus/
+  184  ls
+  185  ls -l
+  186  cd ..
+  187  cd ../
+  188  ls
+  189  vi 0001-add-setjmp-longjmp-support.patch 
+  190  locate setjmp.h
+  191  cp setjmp.h include/nautilus/
+  192  mv setjmp_low.S src/asm/
+  193  mv setjmp.c src/nautilus/
+  194  vi src/Makefile
+  195  vi src/nautilus/Makefile
+  196  make 
+  197  vi src/asm/Makefile 
+  198  make
+  199  ls
+  200  vi src/asm/Makefile 
+  201  make clean
+  202  make 
+  203  vi src/asm/Makefile 
+  204  make 
+  205  vi src/asm/Makefile 
+  206  make 
+  207  ls
+  208  rm setjmp.h 
+  209  ls
+  210  vi Makefile.rej 
+  211  find timing_loops
+  212  grep -R timing_loops
+  213  vi src/asm/Makefile 
+  214  make 
+  215  vi include/nautilus/libccompat.h 
+  216  vi src/nautilus/libccompat.c 
+  217  make 
+  218  cd src/
+  219  grep longjmp
+  220  grep -R longjmp
+  221  vi lua_src/lua.c 
+  222  cd ..
+  223  make
+  224  vi include/nautilus/libccompat.h 
+  225  make
+  226  make clean
+  227  make
+  228  make isoimage
+  229  history
+  230  history more
+  231  history --more
+  232  history > h.txt

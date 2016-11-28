@@ -184,7 +184,7 @@ typedef struct lua_TValue TValue;
 /* Macros to set values */
 #define settt_(o,t)	((o)->tt_=(t))
 
-#define setnvalue(obj,x) \
+#define setnvalue(obj,x) printk("\n In set macro %d",x); \
   { TValue *io=(obj); num_(io)=(x); settt_(io, LUA_TNUMBER); }
 
 #define setnilvalue(obj) settt_(obj, LUA_TNIL)
@@ -387,7 +387,7 @@ typedef struct lua_TValue TValue;
 
 union Value {
   GCObject *gc;    /* collectable objects */
-  void *p;         /* light userdata */
+	  void *p;         /* light userdata */
   int b;           /* booleans */
   lua_CFunction f; /* light C functions */
   numfield         /* numbers */

@@ -55,6 +55,8 @@ deps_src/nautilus/vc.o := \
     $(wildcard include/config/hpet.h) \
     $(wildcard include/config/hz.h) \
     $(wildcard include/config/virtio/pci.h) \
+  include/lua/lua.h \
+  include/nautilus/libccompat.h \
   include/nautilus/nautilus.h \
   include/nautilus/printk.h \
   /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
@@ -86,6 +88,10 @@ deps_src/nautilus/vc.o := \
   include/nautilus/barrier.h \
   include/nautilus/numa.h \
   include/arch/x64/main.h \
+  include/lua/luaconf.h \
+  include/lua/lualib.h \
+  include/lua/lauxlib.h \
+  include/lua/libdump.h \
   include/nautilus/thread.h \
   include/nautilus/percpu.h \
   include/nautilus/msr.h \

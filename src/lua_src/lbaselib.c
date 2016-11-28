@@ -21,6 +21,7 @@
 //#include <nautilus/libccompat.h>
 
 static int luaB_print (lua_State *L) {
+  printk("\n lbaselib.c | luaB_print() | inside now...");
   int n = lua_gettop(L);  /* number of arguments */
   int i;
   lua_getglobal(L, "tostring");

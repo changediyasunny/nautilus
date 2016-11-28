@@ -1,0 +1,25 @@
+--- Makefile
++++ Makefile
+@@ -1,7 +1,8 @@
+ obj-y += smpboot.o \
+ 		 excp_early.o \
+ 		 thread_lowlevel.o \
+-		timing_loops.o
++		 setjmp_low.o \
++		 timing_loops.o
+ 
+ ifdef NAUT_CONFIG_PALACIOS_EMBED_VM_IMG
+ 	obj-y += guest.o
+--- Makefile
++++ Makefile
+@@ -32,8 +32,9 @@
+ 	libccompat.o \
+ 	nemo.o \
+ 	pmc.o \
++	setjmp.o \
+ 	mm/ \
+-        shell.o
++	shell.o
+ 
+ obj-$(NAUT_CONFIG_PROFILE) += instrument.o
+ obj-$(NAUT_CONFIG_XEON_PHI) += sfi.o

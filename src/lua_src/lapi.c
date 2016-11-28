@@ -54,25 +54,44 @@ const char lua_ident[] =
 
 static TValue *index2addr (lua_State *L, int idx) {
   CallInfo *ci = L->ci;
+  printk("\n lpai.c | index2addr() | inside now | ");
   if (idx > 0) {
+    printk("\n lpai.c | index2addr() | idx > 0 ");
     TValue *o = ci->func + idx;
     api_check(L, idx <= ci->top - (ci->func + 1), "unacceptable index");
-    if (o >= L->top) return NONVALIDVALUE;
-    else return o;
+    if (o >= L->top){
+      printk("\n lpai.c | index2addr() | return NONVALIDVALUE now... ");
+          return NONVALIDVALUE;
+    }
+    else{
+       printk("\n lpai.c | index2addr() | return o ");
+        return o;
+    }
   }
   else if (!ispseudo(idx)) {  /* negative index */
+    printk("\n lpai.c | index2addr() | 11 ");
     api_check(L, idx != 0 && -idx <= L->top - (ci->func + 1), "invalid index");
     return L->top + idx;
   }
   else if (idx == LUA_REGISTRYINDEX)
+  {
+    
+    printk("\n lpai.c | index2addr() | 12 ");
     return &G(L)->l_registry;
+  }
   else {  /* upvalues */
+    printk("\n lpai.c | index2addr() | 13 ");
     idx = LUA_REGISTRYINDEX - idx;
     api_check(L, idx <= MAXUPVAL + 1, "upvalue index too large");
-    if (ttislcf(ci->func))  /* light C function? */
+    if (ttislcf(ci->func))
+    {
+            /* light C function? */
+      printk("\n lpai.c | index2addr() | 14 ");
       return NONVALIDVALUE;  /* it has no upvalues */
+    }
     else {
       CClosure *func = clCvalue(ci->func);
+      printk("\n lpai.c | index2addr() | 15 ");
       return (idx <= func->nupvalues) ? &func->upvalue[idx-1] : NONVALIDVALUE;
     }
   }
@@ -165,6 +184,8 @@ LUA_API int lua_gettop (lua_State *L) {
 LUA_API void lua_settop (lua_State *L, int idx) {
   StkId func = L->ci->func;
   lua_lock(L);
+  printk("\n lapi.c | lua_settop() ");
+  printk("\n lapi.c | lua_settop() | idx=%u ", &idx);
   if (idx >= 0) {
     api_check(L, idx <= L->stack_last - (func + 1), "new top too large");
     while (L->top < (func + 1) + idx)
@@ -172,10 +193,12 @@ LUA_API void lua_settop (lua_State *L, int idx) {
     L->top = (func + 1) + idx;
   }
   else {
+    printk("\n lapi.c | lua_settop() | ELSE  L->top=%d ", &L->top);
     api_check(L, -(idx+1) <= (L->top - (func + 1)), "invalid new top");
     L->top += idx+1;  /* `subtract' index (index is negative) */
   }
   lua_unlock(L);
+  printk("\n lapi.c | lua_settop() | unlocked... ");
 }
 
 
@@ -266,7 +289,9 @@ LUA_API int lua_iscfunction (lua_State *L, int idx) {
 
 LUA_API int lua_isnumber (lua_State *L, int idx) {
   TValue n;
+  printk("\n lapi.c | lua_isnumber() | 11");
   const TValue *o = index2addr(L, idx);
+  
   return tonumber(o, &n);
 }
 
@@ -291,7 +316,8 @@ LUA_API int lua_rawequal (lua_State *L, int index1, int index2) {
 
 
 LUA_API void lua_arith (lua_State *L, int op) {
-  StkId o1;  /* 1st operand */
+ printk("\n lua_arith : In"); 
+       	StkId o1;  /* 1st operand */
   StkId o2;  /* 2nd operand */
   lua_lock(L);
   if (op != LUA_OPUNM) /* all other operations expect two operands */
@@ -387,10 +413,14 @@ LUA_API int lua_toboolean (lua_State *L, int idx) {
 
 
 LUA_API const char *lua_tolstring (lua_State *L, int idx, size_t *len) {
+  printk("\n lapi.c | lua_tolstring() | just came.");
   StkId o = index2addr(L, idx);
+  printk("\n lapi.c | lua_tolstring() | object =%d", num_(o));
+  printk("\n lapi.c | lua_tolstring() | idx=%u", &idx);
   if (!ttisstring(o)) {
     lua_lock(L);  /* `luaV_tostring' may create a new string */
     if (!luaV_tostring(L, o)) {  /* conversion failed? */
+      printk("\n lapi.c | lua_tolstring() | tostring() conversion failed");
       if (len != NULL) *len = 0;
       lua_unlock(L);
       return NULL;
@@ -426,6 +456,7 @@ LUA_API lua_CFunction lua_tocfunction (lua_State *L, int idx) {
 
 LUA_API void *lua_touserdata (lua_State *L, int idx) {
   StkId o = index2addr(L, idx);
+  printk("\n in lua_touserdata %d",ttypenv(o));
   switch (ttypenv(o)) {
     case LUA_TUSERDATA: return (rawuvalue(o) + 1);
     case LUA_TLIGHTUSERDATA: return pvalue(o);
@@ -482,6 +513,8 @@ LUA_API void lua_pushnumber (lua_State *L, lua_Number n) {
 
 LUA_API void lua_pushinteger (lua_State *L, lua_Integer n) {
   lua_lock(L);
+  printk("\n lua_pushinteger of n %d",n);
+
   setnvalue(L->top, cast_num(n));
   api_incr_top(L);
   lua_unlock(L);
@@ -516,6 +549,7 @@ LUA_API const char *lua_pushstring (lua_State *L, const char *s) {
     return NULL;
   }
   else {
+    printk("\n lapi.c | lua_pushstring()|string = %s", s);
     TString *ts;
     lua_lock(L);
     luaC_checkGC(L);
@@ -523,6 +557,9 @@ LUA_API const char *lua_pushstring (lua_State *L, const char *s) {
     setsvalue2s(L, L->top, ts);
     api_incr_top(L);
     lua_unlock(L);
+    const char *temp;
+    temp = getstr(ts);
+    printk("\n lapi.c | lua_pushstring() | getstr=%s", temp);
     return getstr(ts);
   }
 }
@@ -554,11 +591,8 @@ LUA_API const char *lua_pushfstring (lua_State *L, const char *fmt, ...) {
 
 LUA_API void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n) {
   lua_lock(L);
-  printk("\n lua_pushcclosure | lua_lock() done");
   if (n == 0) {
-    printk("\n lua_pushcclosure | if loop  done");
     setfvalue(L->top, fn);
-    printk("\n lua_pushcclosure | setfvalue done");
   }
   else {
     Closure *cl;
@@ -573,9 +607,7 @@ LUA_API void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n) {
     setclCvalue(L, L->top, cl);
   }
   api_incr_top(L);
-  printk("\n lua_pushcclosure | api_incr_top() done");
   lua_unlock(L);
-  printk("\n lua_pushcclosure | lua_unlock() done");
 }
 
 
@@ -612,10 +644,14 @@ LUA_API int lua_pushthread (lua_State *L) {
 
 LUA_API void lua_getglobal (lua_State *L, const char *var) {
   Table *reg = hvalue(&G(L)->l_registry);
+  printk("\n lapi.c | lua_getglobal() | 1");
   const TValue *gt;  /* global table */
   lua_lock(L);
   gt = luaH_getint(reg, LUA_RIDX_GLOBALS);
+  printk("\n lapi.c | lua_getglobal() |  luaH_getint done...");
+  printk("\n lapi.c | lua_getglobal() | L->top = %u ", &L->top);
   setsvalue2s(L, L->top++, luaS_new(L, var));
+  printk("\n lapi.c | lua_getglobal() |  setsvalue2s done...");
   luaV_gettable(L, gt, L->top - 1, L->top - 1);
   lua_unlock(L);
 }
@@ -623,8 +659,10 @@ LUA_API void lua_getglobal (lua_State *L, const char *var) {
 
 LUA_API void lua_gettable (lua_State *L, int idx) {
   StkId t;
+  printk("\n lapi.c | inside lua_gettable()");
   lua_lock(L);
   t = index2addr(L, idx);
+  printk("\n lapi.c | index2addr val=%u ", &t);
   luaV_gettable(L, t, L->top - 1, L->top - 1);
   lua_unlock(L);
 }
@@ -931,7 +969,8 @@ static void f_call (lua_State *L, void *ud) {
 
 
 LUA_API int lua_pcallk (lua_State *L, int nargs, int nresults, int errfunc,
-                        int ctx, lua_CFunction k) {
+                        int ctx, lua_CFunction k)
+{
   struct CallS c;
   int status;
   ptrdiff_t func;
@@ -942,10 +981,10 @@ LUA_API int lua_pcallk (lua_State *L, int nargs, int nresults, int errfunc,
   printk("\n lua_pcallk | api-check success.");
   api_checknelems(L, nargs+1);
   printk("\n lua_pcallk | api-checklms success.");
-api_check(L, L->status == LUA_OK, "cannot do calls on non-normal thread");
+  api_check(L, L->status == LUA_OK, "cannot do calls on non-normal thread");
  
   printk("\n lua_pcallk | api-check2 success.");
- checkresults(L, nargs, nresults);
+  checkresults(L, nargs, nresults);
   
   printk("\n lua_pcallk | check resiults success.");
   if (errfunc == 0)
@@ -954,11 +993,12 @@ api_check(L, L->status == LUA_OK, "cannot do calls on non-normal thread");
     StkId o = index2addr(L, errfunc);
     api_checkstackindex(L, errfunc, o);
     func = savestack(L, o);
-}
+  }
   printk("\n lua_pcallk | if-else-errfunbc success.");
   c.func = L->top - (nargs+1);  /* function to be called */
-  printk("\n lua_pcallk | sunc called... success.");
-  if (k == NULL || L->nny > 0) {  /* no continuation or no yieldable? */
+  printk("\n lua_pcallk | Func called... success.");
+  if (k == NULL || L->nny > 0)
+  {  /* no continuation or no yieldable? */
     printk("\n lua_pcallk | lua_docall | inside IF- called... success.");
     c.nresults = nresults;  /* do a 'conventional' protected call */
     status = luaD_pcall(L, f_call, &c, savestack(L, c.func), func);

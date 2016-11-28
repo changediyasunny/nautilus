@@ -1107,7 +1107,8 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 		end = ((void *)-1);
 		size = end - buf;
 	}
-
+        
+        printk("\n nautilus/printk.c | vsnprintf | fmt=%s", &fmt);
 	while (*fmt) {
 		const char *old_fmt = fmt;
 
@@ -1241,7 +1242,8 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 		else
 			end[-1] = '\0';
 	}
-
+        printk("\n nautilus/printk.c | vsnprintf | str=%s", &str);
+        printk("\n nautilus/printk.c | vsnprintf | buf=%s", &buf);
 	/* the trailing null byte doesn't count towards the total */
 	return str-buf;
 
@@ -1354,10 +1356,12 @@ int sprintf(char * buf, const char *fmt, ...)
 {
 	va_list args;
 	int i;
-
+        
+        printk("\n nautilus/printk.c | sprintf()| buf= %s", &buf);
 	va_start(args, fmt);
 	i=vsnprintf(buf, INT_MAX, fmt, args);
 	va_end(args);
+        printk("\n nautilus/printk.c | sprintf()| i = %d ", &i);
 	return i;
 }
 

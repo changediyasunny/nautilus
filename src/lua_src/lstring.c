@@ -154,11 +154,13 @@ static TString *internshrstr (lua_State *L, const char *str, size_t l) {
 ** new string (with explicit length)
 */
 TString *luaS_newlstr (lua_State *L, const char *str, size_t l) {
+  printk("\n lstring.c | luaS_newlstr() | string is=%s ", str);
   if (l <= LUAI_MAXSHORTLEN)  /* short string? */
     return internshrstr(L, str, l);
   else {
     if (l + 1 > (MAX_SIZET - sizeof(TString))/sizeof(char))
       luaM_toobig(L);
+    printk("\n lstring.c | luaS_newlstr() | creating string Object ");
     return createstrobj(L, str, l, LUA_TLNGSTR, G(L)->seed, NULL);
   }
 }
@@ -168,6 +170,7 @@ TString *luaS_newlstr (lua_State *L, const char *str, size_t l) {
 ** new zero-terminated string
 */
 TString *luaS_new (lua_State *L, const char *str) {
+  printk("\n lstring.c | luaS_new() | string is=%s ", str);
   return luaS_newlstr(L, str, strlen(str));
 }
 

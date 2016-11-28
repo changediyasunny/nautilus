@@ -30,6 +30,7 @@
 #include "lua/lundump.h"
 #include "lua/lvm.h"
 #include "lua/lzio.h"
+#include <nautilus/setjmp.h>
 
 
 
@@ -59,13 +60,15 @@
 #elif defined(LUA_USE_ULONGJMP)
 /* in Unix, try _longjmp/_setjmp (more efficient) */
 #define LUAI_THROW(L,c)		_longjmp((c)->b, 1)
-#define LUAI_TRY(L,c,a)		if (_setjmp((c)->b) == 0) { a }
+#define LUAI_TRY(L,c,a)	        printk("in unix"); \
+				if (_setjmp((c)->b) == 0) { a }
 #define luai_jmpbuf		jmp_buf
 
 #else
 /* default handling with long jumps */
 #define LUAI_THROW(L,c)		longjmp((c)->b, 1)
-#define LUAI_TRY(L,c,a)		if (setjmp((c)->b) == 0) { a }
+#define LUAI_TRY(L,c,a)		 printk("\n in default \n"); \
+       				if (setjmp((c)->b) == 0)  { a }
 #define luai_jmpbuf		jmp_buf
 
 #endif
@@ -130,7 +133,7 @@ int luaD_rawrunprotected (lua_State *L, Pfunc f, void *ud) {
   lj.status = LUA_OK;
   lj.previous = L->errorJmp;  /* chain new error handler */
   L->errorJmp = &lj;
-    printk("\n lua_rawunportected |  | 2 ");
+  printk("\n lua_rawunportected |  | 2 ");
   LUAI_TRY(L, &lj,
     (*f)(L, ud);
   );
@@ -607,9 +610,9 @@ int luaD_pcall (lua_State *L, Pfunc func, void *u,
   ptrdiff_t old_errfunc = L->errfunc;
   L->errfunc = ef;
   printk("\n LUAD-pcall | 1.2 ");
-  //status = luaD_rawrunprotected(L, func, u);
+  status = luaD_rawrunprotected(L, func, u);
+//status =0; //manually adding to check arith   
   printk("\n LUAD-pcall | 2 ");
-  status = LUA_OK;  //manually added....
   if (status != LUA_OK) {  /* an error occurred? */
     printk("\n LUAD-pcall | 3 ");
     StkId oldtop = restorestack(L, old_top);

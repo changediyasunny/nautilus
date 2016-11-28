@@ -34,7 +34,11 @@
 
 const TValue *luaV_tonumber (const TValue *obj, TValue *n) {
   lua_Number num;
-  if (ttisnumber(obj)) return obj;
+  printk("\n lvm.c | luav_tonumber() | insode now...");
+  if (ttisnumber(obj)){
+     printk("\n lvm.c | luaV_tonumber() | ttisnumber success.....");
+     return obj;
+  }
   if (ttisstring(obj) && luaO_str2d(svalue(obj), tsvalue(obj)->len, &num)) {
     setnvalue(n, num);
     return n;
@@ -48,9 +52,14 @@ int luaV_tostring (lua_State *L, StkId obj) {
   if (!ttisnumber(obj))
     return 0;
   else {
+    printk("\n lvm.c | luaV_tostring() | Else part. it is a number..");
     char s[LUAI_MAXNUMBER2STR];
+    printk("\n lvm.c | luaV_tostring() | obj=%d ",num_(obj));
     lua_Number n = nvalue(obj);
+    printk("\n lvm.c | luaV_tostring() | N=%d ", n);
     int l = lua_number2str(s, n);
+    printk("\n lvm.c | luaV_tostring() | string=%s", &s);
+    printk("\n lvm.c | luaV_tostring() | no of chars=%d ", &l);
     setsvalue2s(L, obj, luaS_newlstr(L, s, l));
     return 1;
   }
@@ -109,14 +118,19 @@ static void callTM (lua_State *L, const TValue *f, const TValue *p1,
 
 void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
   int loop;
+  printk("\n lvm.c | luaV_gettable() | Key=%d", &key);
   for (loop = 0; loop < MAXTAGLOOP; loop++) {
     const TValue *tm;
     if (ttistable(t)) {  /* `t' is a table? */
+      printk("\n lvm.c | luaV_gettable() | 11 ");
       Table *h = hvalue(t);
       const TValue *res = luaH_get(h, key); /* do a primitive get */
       if (!ttisnil(res) ||  /* result is not nil? */
           (tm = fasttm(L, h->metatable, TM_INDEX)) == NULL) { /* or no TM? */
+        printk("\n lvm.c | luaV_gettable() | 12 ");
+        printk("\n lvm.c | luaV_gettable() | val=%u | res=%u", &val, &res);
         setobj2s(L, val, res);
+        printk("\n lvm.c | luaV_gettable() | 13 returning ");
         return;
       }
       /* else will try the tag method */
@@ -124,6 +138,7 @@ void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
     else if (ttisnil(tm = luaT_gettmbyobj(L, t, TM_INDEX)))
       luaG_typeerror(L, t, "index");
     if (ttisfunction(tm)) {
+      printk("\n lvm.c | luaV_gettable() | goin' to callTM ");
       callTM(L, tm, t, key, val, 1);
       return;
     }

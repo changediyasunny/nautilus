@@ -23,6 +23,9 @@
  * This is free software.  You are permitted to use,
  * redistribute, and modify it as specified in the file "LICENSE.txt".
  */
+#include "lua/lua.h"
+#include "lua/lualib.h"
+#include "lua/lauxlib.h"
 
 #include <nautilus/nautilus.h>
 #include <nautilus/thread.h>
@@ -974,6 +977,10 @@ int nk_vc_gets(char *buf, int n, int display)
     buf[i] = nk_vc_getchar();
     if (display) { 
       nk_vc_putchar(buf[i]);
+    }
+    else
+    {
+	    printk("\n Checking putchar");
     }
     if (buf[i] == '\n') {
       buf[i] = 0;

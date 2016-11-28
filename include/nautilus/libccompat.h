@@ -85,7 +85,7 @@ typedef int clockid_t;
 
 
 #define _JBLEN ((9 * 2) + 3 + 16)
-typedef int jmp_buf[_JBLEN];
+//typedef int jmp_buf[_JBLEN];
 //int clock(); - better definition found later
 
 // 
@@ -241,8 +241,8 @@ void (*signal(int sig, void (*func)(int)))(int);
 double pow(double x, double y);
 char *tmpnam(char *s);
 clock_t clock(void);
-void longjmp(int *,int __val);
-int setjmp(int *);
+//void longjmp(int *,int __val);
+//int setjmp(int *);
 time_t time(time_t * timer);
 double difftime(time_t time1, time_t time2);
 void *memchr(const void *str, int c, size_t n);

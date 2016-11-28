@@ -162,8 +162,11 @@ int luaO_str2d (const char *s, size_t len, lua_Number *result) {
   else if (strpbrk(s, "xX"))  /* hexa? */
     *result = lua_strx2number(s, &endptr);
   else
+  {
+	  printk("\n lua0_str2d | before str2number");
     *result = lua_str2number(s, &endptr);
-  if (endptr == s) return 0;  /* nothing recognized */
+  }
+    if (endptr == s) return 0;  /* nothing recognized */
   while (lisspace(cast_uchar(*endptr))) endptr++;
   return (endptr == s + len);  /* OK if no trailing characters */
 }

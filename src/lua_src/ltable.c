@@ -481,9 +481,16 @@ const TValue *luaH_getstr (Table *t, TString *key) {
 */
 const TValue *luaH_get (Table *t, const TValue *key) {
   switch (ttype(key)) {
-    case LUA_TSHRSTR: return luaH_getstr(t, rawtsvalue(key));
-    case LUA_TNIL: return luaO_nilobject;
+    case LUA_TSHRSTR:{
+            printk("\n ltable.c | luaH_get() | case of LUA_TSHRSTR");
+            return luaH_getstr(t, rawtsvalue(key));
+    }
+    case LUA_TNIL:{
+           printk("\n ltable.c | luaH_get() | case of LUA_TNIL");
+           return luaO_nilobject;
+    }
     case LUA_TNUMBER: {
+      printk("\n ltable.c | luaH_get() | case of LUA_TNUMBER");
       int k;
       lua_Number n = nvalue(key);
       lua_number2int(k, n);
@@ -492,6 +499,7 @@ const TValue *luaH_get (Table *t, const TValue *key) {
       /* else go through */
     }
     default: {
+      printk("\n ltable.c | luaH_get() | OMG Default Case...");
       Node *n = mainposition(t, key);
       do {  /* check whether `key' is somewhere in the chain */
         if (luaV_rawequalobj(gkey(n), key))
